@@ -1,10 +1,10 @@
 import streamlit as st
 
-from knowledge_gpt.components.faq import faq
-from dotenv import load_dotenv
+from Fetchify.components.faq import faq
+#from dotenv import load_dotenv
 import os
 
-load_dotenv()
+#load_dotenv()
 
 
 def sidebar():
