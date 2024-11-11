@@ -1,4 +1,5 @@
 import streamlit as st
+from Fetchify.components.streamresults import stream_data
 from Fetchify.components.sidebar import sidebar
 import pandas as pd
 import numpy as np
@@ -30,12 +31,38 @@ if uploaded_file is not None:
                 height=400,
                 selection_mode="single-column"
             )
-            
-            # Handle selection event
-        if selection.selected_columns:
-                st.write("### Selected Columns:")
-                st.write(selection.selected_columns)
-            
+
+
+        columns = df.columns.tolist()
+        selected_column = st.selectbox("Select column to filter by", columns)
+
+        filtered_df = df[selected_column]
+        unique_values = df[selected_column].unique()
+        entries = df.iloc[:, [selected_column]]
+        st.write(filtered_df)
+
+        st.text_input( 
+        "Input your search query for each entry in the column, using placeholders :  ",
+        "Eg : ",
+        key="query",)
+
+        
+        if st.button("SUBMIT", type="primary"):
+            st.write("Why hello there")
+        else:
+            st.write("ERROR!")
+
+        
+
+
+        if st.button("Show Reults"):
+            st.write_stream(stream_data)
+        
+        if st.button("Download CSV"):
+            st.downloadfile(stream_data)
+
+
+
                 
     except Exception as e:
         st.error(f"Error reading the file: {str(e)}")
